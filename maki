@@ -1,0 +1,37 @@
+#!/bin/bash
+[ "$UID" -eq 0 ] || exec sudo "$0" "$@"
+echo ""
+echo "                           🌑 🌒 🌓 🌔 🌕 🌖 🌗 🌘"
+echo "                           𝓒𝓸𝓷𝓼𝓮𝓻𝓿𝓪𝓽𝓲𝓸𝓷 𝓶𝓸𝓭𝓮 𝓼𝓽𝓪𝓽𝓾𝓼"
+if grep -q 1 /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode;
+then 
+	echo ""
+	echo "Enabled ⚡"
+	echo ""
+	echo "Wanna turn it off ? (press 0) 🌱"
+	read sw
+	if [ $sw -eq 0 ]
+	then
+		echo 0 > /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode
+		echo ""
+		echo "Conservation mode disabled ⚡"
+		echo ""
+	else
+		echo "Your battery is still in conservation mode 🌱"
+	fi
+else
+	echo ""
+	echo "Disabled 🌱"
+	echo "Wanna turn it on ? (press 1) ⚡"
+	read sw
+	if [ $sw -eq 1 ]
+	then
+		echo 1 > /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode
+		echo ""
+		echo "Conservation mode enabled 🌱"
+		echo ""
+	else 
+		echo "Your battery is still charging ⚡"
+	fi
+fi
+
