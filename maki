@@ -8,7 +8,7 @@ then
 	echo ""
 	echo "Enabled 🌱"
 	echo ""
-	echo "Wanna turn it off ? (press 0) 🌱"
+	echo "Wanna turn it off ? (press 0) ⚡"
 	read sw
 	if [ $sw -eq 0 ]
 	then
@@ -22,7 +22,7 @@ then
 else
 	echo ""
 	echo "Disabled ⚡"
-	echo "Wanna turn it on ? (press 1) ⚡"
+	echo "Wanna turn it on ? (press 1) 🌱"
 	read sw
 	if [ $sw -eq 1 ]
 	then
