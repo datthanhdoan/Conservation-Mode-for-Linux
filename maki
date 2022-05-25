@@ -6,7 +6,7 @@ echo "                           𝓒𝓸𝓷𝓼𝓮𝓻𝓿𝓪𝓽𝓲𝓸�
 if grep -q 1 /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode;
 then 
 	echo ""
-	echo "Enabled ⚡"
+	echo "Enabled 🌱"
 	echo ""
 	echo "Wanna turn it off ? (press 0) 🌱"
 	read sw
@@ -21,7 +21,7 @@ then
 	fi
 else
 	echo ""
-	echo "Disabled 🌱"
+	echo "Disabled ⚡"
 	echo "Wanna turn it on ? (press 1) ⚡"
 	read sw
 	if [ $sw -eq 1 ]
