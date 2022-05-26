@@ -2,7 +2,7 @@
 Work for ideapad , Yoga slim ( maybe thinkpad 🤔 pls give me a feedback) 
 
  * 1 - Clone this repo 
- * 2 - cd to the directory which your clone , open terminal from this a type:
+ * 2 - cd to the directory which your clone , open terminal from this and type:
 ```
 $ chmod +x maki
 ```
