@@ -14,7 +14,7 @@ if grep -q 1 /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode
 
 	if [ "$sw" -eq 0 ]; then
 		echo 0 >/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode
-		echo "1-change			2-change after 80%			3-change after 95%"
+		echo "1-change			2-Stop changer after 80%			3-Stop changer after 95%"
 		read sw
 
 		if [ "$sw" -eq 1 ]; then
@@ -70,11 +70,53 @@ else
 	read sw
 
 	if [ "$sw" -eq 1 ]; then
-		echo ""
-		echo "Setting conservation mode..."
-		echo 1 >/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode
-		echo "Conservation mode enabled 🌱"
-		echo ""
+		echo "1-Turn on now 2- On after 80%			3-On after 95%"
+		read sw
+
+		if [ "$sw" -eq 1 ]; then
+			percentage=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep percentage | awk '{print $2}' | tr -d '%')
+			echo 1 >/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode
+			echo "------------------------"
+			echo "Battery percent : $percentage %"
+			echo ""
+			echo "Conservation mode Enable"
+			echo ""
+		elif [ "$sw" -eq 2 ]; then
+			while true; do
+				percentage=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep percentage | awk '{print $2}' | tr -d '%')
+				echo "------------------------"
+				echo "Battery percent : $percentage %"
+				if [ "$percentage" -gt 80 ]; then
+					echo "Battery Percentage: $percentage%"
+					echo "Setting conservation mode..."
+					echo 1 >/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode
+					break
+				fi
+
+				sleep 10
+			done
+
+			echo ""
+			echo "Conservation mode enabled 🌱"
+			echo ""
+		elif [ "$sw" -eq 3 ]; then
+			while true; do
+				percentage=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep percentage | awk '{print $2}' | tr -d '%')
+				echo "------------------------"
+				echo "Battery percent : $percentage %"
+				if [ "$percentage" -gt 95 ]; then
+					echo "Battery Percentage: $percentage%"
+					echo "Setting conservation mode..."
+					echo 1 >/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode
+					break
+				fi
+
+				sleep 10
+			done
+			echo "Conservation mode enabled 🌱"
+		else
+			echo "Invalid option. Please try again!"
+		fi
 	else
 		echo "Your battery is still charging ⚡"
 		echo "You can close the terminal!"
